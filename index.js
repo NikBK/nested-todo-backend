@@ -34,7 +34,7 @@ app.use(
     })
 );
 
-const userData = [];
+const userData = [{ username: "testuser@gmail.com", password: "test" }];
 
 app.post("/register", (req, res) => {
     const username = req.body.username;
