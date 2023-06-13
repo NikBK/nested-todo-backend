@@ -50,6 +50,11 @@ app.post("/register", (req, res) => {
     res.send(userData);
 });
 
+app.get("/register", (req, res) => {
+    console.log({ username, password });
+    res.send(userData);
+});
+
 app.get("/login", (req, res) => {
     if (req.session.user) {
         res.send({ loggedIn: true, user: req.session.user });
