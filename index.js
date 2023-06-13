@@ -51,7 +51,6 @@ app.post("/register", (req, res) => {
 });
 
 app.get("/register", (req, res) => {
-    console.log({ username, password });
     res.send(userData);
 });
 
