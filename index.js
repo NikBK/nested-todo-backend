@@ -35,8 +35,7 @@ app.use(
 );
 
 const userData = [{
-    username: "testuser@gmail.com",
-    password: ""
+    username: "testuser@gmail.com", password: ""
 }];
 
 bcrypt.hash("test", saltRounds, (err, hash) => {
@@ -83,7 +82,6 @@ app.post("/login", (req, res) => {
         bcrypt.compare(password, curUser.password, (error, response) => {
             if (response) {
                 req.session.user = curUser;
-                console.log(req.session.user);
                 res.send(curUser);
             } else {
                 res.send({ message: "Wrong username/password combination!" });
