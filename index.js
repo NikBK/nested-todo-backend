@@ -49,29 +49,25 @@ const userData = [{
     })
 }];
 
-const updateTestUserPassword = () => {
-    console.log("updating test user password");
-    bcrypt.hash("test", saltRounds, (err, hash) => {
-        if (err) {
-            console.log(err);
-        }
-        userData[0].password = hash;
-    })
-}
-
-// updateTestUserPassword();
-
 app.post("/register", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    bcrypt.hash(password, saltRounds, (err, hash) => {
-        if (err) {
-            console.log(err);
-        }
-        userData.push({ id: new Date().getTime().toString(), username, password: hash });
-    });
-    res.send(userData);
+    const existingUser = userData.find((obj) => obj.username === username);
+
+    if (!existingUser) {
+        bcrypt.hash(password, saltRounds, (err, hash) => {
+            if (err) {
+                console.log(err);
+            }
+            userData.push({ id: new Date().getTime().toString(), username, password: hash });
+            res.send(userData);
+        });
+    }
+    else {
+        res.json({ message: "User already exists" });
+    }
+
 });
 
 app.get("/register", (req, res) => {
