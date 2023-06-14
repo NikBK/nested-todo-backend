@@ -41,10 +41,16 @@ app.use(
 const userData = [{
     id: new Date().getTime().toString(),
     username: "testuser@gmail.com",
-    password: ""
+    password: bcrypt.hash("test", saltRounds, (err, hash) => {
+        if (err) {
+            console.log(err);
+        }
+        userData[0].password = hash;
+    })
 }];
 
 const updateTestUserPassword = () => {
+    console.log("updating test user password");
     bcrypt.hash("test", saltRounds, (err, hash) => {
         if (err) {
             console.log(err);
@@ -52,7 +58,8 @@ const updateTestUserPassword = () => {
         userData[0].password = hash;
     })
 }
-updateTestUserPassword();
+
+// updateTestUserPassword();
 
 app.post("/register", (req, res) => {
     const username = req.body.username;
