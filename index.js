@@ -10,11 +10,12 @@ const saltRounds = 10;
 require('dotenv').config();
 
 const app = express();
+const FRONT_END_URL = "https://nested-todo-nikbk.vercel.app";
 
 app.use(express.json());
 app.use(
     cors({
-        origin: ["https://nested-todo-nikbk.vercel.app"],
+        origin: [FRONT_END_URL],
         methods: ["GET", "POST"],
         credentials: true,
     })
@@ -38,12 +39,15 @@ const userData = [{
     username: "testuser@gmail.com", password: ""
 }];
 
-bcrypt.hash("test", saltRounds, (err, hash) => {
-    if (err) {
-        console.log(err);
-    }
-    userData[0].password = hash;
-})
+const updateTestUserPassword = () => {
+    bcrypt.hash("test", saltRounds, (err, hash) => {
+        if (err) {
+            console.log(err);
+        }
+        userData[0].password = hash;
+    })
+}
+updateTestUserPassword();
 
 app.post("/register", (req, res) => {
     const username = req.body.username;
